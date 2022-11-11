@@ -11,16 +11,14 @@ import java.io.FileWriter
 
 class MainActivity : FlutterActivity() {
 
-    private lateinit var methodChannel: MethodChannel
+    private val channelName = "com.example.text_editors/action"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        methodChannel = MethodChannel(
+        MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            "com.example.text_editors/action"
-        )
-        
-        methodChannel.setMethodCallHandler { call, result ->
+            channelName
+        ).setMethodCallHandler { call, result ->
 
             val args = call.arguments as Map<*, *>
 
