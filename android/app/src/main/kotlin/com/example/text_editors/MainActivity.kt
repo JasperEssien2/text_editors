@@ -11,11 +11,13 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(
+
+        val methodChannel = MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             channelName
-        ).setMethodCallHandler { call, result ->
+        )
 
+        methodChannel.setMethodCallHandler { call, result ->
             val args = call.arguments as Map<*, *>
 
             when (call.method) {
@@ -44,5 +46,4 @@ class MainActivity : FlutterActivity() {
             callback.error("0", e.message, e.cause)
         }
     }
-
 }
