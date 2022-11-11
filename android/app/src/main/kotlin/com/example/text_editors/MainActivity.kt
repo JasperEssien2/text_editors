@@ -12,38 +12,23 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        val methodChannel = MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            channelName
-        )
+        //TODO 1: Set a corresponding method channel
 
-        methodChannel.setMethodCallHandler { call, result ->
-            val args = call.arguments as Map<*, *>
-
-            when (call.method) {
-                "createFile" -> {
-                    createTextFile(
-                        args["fileName"] as String,
-                        args["content"] as String,
-                        result
-                    )
-                }
-            }
-
+        //TODO 2: Set up method channel call handler
         }
     }
 
-    private fun createTextFile(fileName: String, content: String, callback: MethodChannel.Result) {
+    private fun createTextFile(fileName: String, content: String, result: MethodChannel.Result) {
 
         try {
             val file = File(filesDir, "$fileName.txt")
 
             file.writeText(content)
 
-            callback.success(true)
+            //TODO 3: Send back a success result
         } catch (e: java.lang.Exception) {
 
-            callback.error("0", e.message, e.cause)
+            //TODO 3: Send back an error result if creating file failed
         }
     }
 }
