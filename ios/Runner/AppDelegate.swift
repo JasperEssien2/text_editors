@@ -34,8 +34,10 @@ import Flutter
     
     private func createTextFile(fileName: String, fileContent: String, result: FlutterResult){
         
-        let filePath = NSHomeDirectory() + "\(fileName).txt"
-            
+        let appSupportDir = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        let filePath = appSupportDir.appendingPathComponent("\(fileName).txt").path
+        
         if(FileManager.default.createFile(atPath: filePath, contents: fileContent.data(using: .utf8))){
             result(true)
         }else{
