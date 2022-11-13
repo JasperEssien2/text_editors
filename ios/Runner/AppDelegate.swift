@@ -8,23 +8,13 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
       
-      let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
-      
+      //TODO1: Get access to the FlutterViewController
+     
       let channelName = "com.example.text_editors/action"
-      let methodChannel = FlutterMethodChannel(name: channelName, binaryMessenger: controller.binaryMessenger)
-      
-      methodChannel.setMethodCallHandler({
-          (call, result) -> () in
-         
-          guard call.method == "createFile" else{
-              result(FlutterMethodNotImplemented)
-                return
-          }
-          
-          let arguments = call.arguments as! NSDictionary
-          
-          self.createTextFile(fileName: arguments["fileName"] as! String, fileContent: arguments["content"] as! String, result:result)
-      })
+
+      //TODO2: Create a method channel
+    
+      //TODO3: Set a method call handler
       
     GeneratedPluginRegistrant.register(with: self)
       
@@ -39,10 +29,9 @@ import Flutter
         let filePath = appSupportDir.appendingPathComponent("\(fileName).txt").path
         
         if(FileManager.default.createFile(atPath: filePath, contents: fileContent.data(using: .utf8))){
-            result(true)
+            //TODO4: Send back a success
         }else{
-            
-            result(FlutterError(code: "0", message: "Saving file failed", details: nil))
+            //TODO5: Send back a FlutterError if saving failed
         }
     }
 }
