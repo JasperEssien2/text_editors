@@ -24,6 +24,8 @@ class FileApiImpl : FileApi{
       
       let fileApi = FileApiImpl()
       
+      let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
+      
       FileApiSetup.setUp(binaryMessenger: controller.binaryMessenger, api: fileApi)
       
       GeneratedPluginRegistrant.register(with: self)
