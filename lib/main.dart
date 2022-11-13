@@ -38,8 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    ///TODO3: Replace [MethodChannelService] with [PigeonFileApiService]
-    _fileHelper = FileHelper(MethodChannelService());
+    _fileHelper = FileHelper(PigeonFileApiService());
     super.initState();
   }
 

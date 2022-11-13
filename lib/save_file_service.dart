@@ -27,8 +27,6 @@ class MethodChannelService implements SaveFileService {
 }
 
 class PigeonFileApiService implements SaveFileService {
-  
-  //TODO1: Initialise FileApi
   final _fileApi = FileApi();
 
   @override
@@ -41,8 +39,5 @@ class PigeonFileApiService implements SaveFileService {
     } catch (e) {
       return false;
     }
-
-    // TODO2: implement saveFile
-    throw UnimplementedError();
   }
 }

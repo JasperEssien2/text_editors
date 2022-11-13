@@ -10,7 +10,6 @@ import java.io.File
 
 class MainActivity : FlutterActivity() {
 
-    //TODO 1: Implement [FileApi] interface
     class FileApiImpl(private val filesDir: File) : FileApi {
 
         override fun saveTextFile(data: FileData): Response {
@@ -29,48 +28,11 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        //TODO 2: Delete method channel implementation between TODO 2 and TODO 3
-        val channelName = "com.example.text_editors/action"
-        val methodChannel = MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            channelName
-        )
-
-        methodChannel.setMethodCallHandler { call, result ->
-            val args = call.arguments as Map<*, *>
-
-            when (call.method) {
-                "createFile" -> {
-                    createTextFile(
-                        args["fileName"] as String,
-                        args["content"] as String,
-                        result
-                    )
-                }
-            }
-        }
-        //TODO 3
-
-        //TODO 4: Initialize FileApiImpl
         val fileApi = FileApiImpl(filesDir)
 
-        //TODO 5: Setup FileApi communication
         FileApi.setUp(
             binaryMessenger = flutterEngine.dartExecutor.binaryMessenger,
             api = fileApi
         )
-    }
-
-    private fun createTextFile(fileName: String, content: String, callback: MethodChannel.Result) {
-        try {
-            val file = File(filesDir, "$fileName.txt")
-
-            file.writeText(content)
-
-            callback.success(true)
-        } catch (e: java.lang.Exception) {
-
-            callback.error("0", e.message, e.cause)
-        }
     }
 }
