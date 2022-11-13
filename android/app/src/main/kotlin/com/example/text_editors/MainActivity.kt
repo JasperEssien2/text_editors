@@ -11,20 +11,6 @@ import java.io.File
 class MainActivity : FlutterActivity() {
 
     //TODO 1: Implement [FileApi] interface
-    class FileApiImpl(private val filesDir: File) : FileApi {
-
-        override fun saveTextFile(data: FileData): Response {
-            return try {
-                val file = File(filesDir, "${data.fileName}.txt")
-
-                file.writeText(data.content!!)
-
-                Response(successful = true)
-            } catch (e: java.lang.Exception) {
-                Response(successful = false, error = e.message)
-            }
-        }
-    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -52,15 +38,12 @@ class MainActivity : FlutterActivity() {
         //TODO 3
 
         //TODO 4: Initialize FileApiImpl
-        val fileApi = FileApiImpl(filesDir)
 
         //TODO 5: Setup FileApi communication
-        FileApi.setUp(
-            binaryMessenger = flutterEngine.dartExecutor.binaryMessenger,
-            api = fileApi
-        )
+
     }
 
+    //TODO 6: Delete createTextFile() method
     private fun createTextFile(fileName: String, content: String, callback: MethodChannel.Result) {
         try {
             val file = File(filesDir, "$fileName.txt")
