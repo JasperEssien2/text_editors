@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 
 abstract class SaveFileService {
-  Future<bool> saveFile({required String fileName, required String text});
+  FutureOr<bool> saveFile({required String fileName, required String text});
 }
 
 class MethodChannelService implements SaveFileService {
@@ -9,7 +11,7 @@ class MethodChannelService implements SaveFileService {
       MethodChannel("com.example.text_editors/action");
 
   @override
-  Future<bool> saveFile(
+  FutureOr<bool> saveFile(
       {required String fileName, required String text}) async {
     try {
       return await _methodChannel.invokeMethod(
@@ -29,7 +31,7 @@ class PigeonFileApiService implements SaveFileService {
   //TODO1: Initialise FileApi
 
   @override
-  Future<bool> saveFile(
+  FutureOr<bool> saveFile(
       {required String fileName, required String text}) async {
     // TODO2: implement saveFile
     throw UnimplementedError();
