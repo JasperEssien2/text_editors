@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:text_editors/file_helper.dart';
 import 'package:text_editors/save_file_service.dart';
@@ -38,7 +40,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    _fileHelper = FileHelper(FFIFileApiService());
+    SaveFileService fileApiService = PigeonFileApiService();
+
+    if (Platform.isMacOS) {
+      fileApiService = FFIFileApiService();
+    }
+    _fileHelper = FileHelper(fileApiService);
     super.initState();
   }
 

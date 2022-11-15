@@ -52,19 +52,20 @@ typedef CreateFileDart = bool Function(
 typedef CreateFileNative = ffi.Bool Function(
     ffi.Pointer<Utf8> fileName, ffi.Pointer<Utf8> content);
 
+
 class FFIFileApiService implements SaveFileService {
   @override
   FutureOr<bool> saveFile({required String fileName, required String text}) {
     final ffi.DynamicLibrary nativeCreateFile =
         ffi.DynamicLibrary.open("file_api.dylib");
 
-    final callableFunction = nativeCreateFile
+    final createTextFileFunction = nativeCreateFile
         .lookupFunction<CreateFileNative, CreateFileDart>("createTextFile");
 
     final fileNameUtf8 = fileName.toNativeUtf8();
     final contentUtf8 = text.toNativeUtf8();
 
-    final bool successful = callableFunction(fileNameUtf8, contentUtf8);
+    final bool successful = createTextFileFunction(fileNameUtf8, contentUtf8);
 
     malloc.free(fileNameUtf8);
     malloc.free(contentUtf8);
