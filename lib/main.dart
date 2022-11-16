@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:text_editors/file_helper.dart';
 import 'package:text_editors/save_file_service.dart';
 
 void main() {
@@ -31,14 +30,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late final FileHelper _fileHelper;
+  // ignore: prefer_final_fields
+  late SaveFileService _saveFileService = MethodChannelService();
 
   final _textController = TextEditingController();
   final _fileNameController = TextEditingController();
 
   @override
   void initState() {
-    _fileHelper = FileHelper(MethodChannelService());
     super.initState();
   }
 
@@ -63,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final messenger = ScaffoldMessenger.of(context);
-          final successful = await _fileHelper.saveFile(
+          final successful = await _saveFileService.saveFile(
             fileName: _fileNameController.text,
             text: _textController.text,
           );
