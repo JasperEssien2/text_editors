@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // ignore: prefer_final_fields
-  late SaveFileService _saveFileService = MethodChannelService();
+  late SaveFileService _saveFileService = PigeonFileApiService();
 
   final _textController = TextEditingController();
   final _fileNameController = TextEditingController();
