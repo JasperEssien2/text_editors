@@ -33,16 +33,18 @@ import Flutter
   }
     
     private func createTextFile(fileName: String, fileContent: String, result: FlutterResult){
-        
-        let appSupportDir = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        
-        let filePath = appSupportDir.appendingPathComponent("\(fileName).txt").path
-        
-        if(FileManager.default.createFile(atPath: filePath, contents: fileContent.data(using: .utf8))){
-            result(true)
-        }else{
+
+      if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first{
             
-            result(FlutterError(code: "0", message: "Saving file failed", details: nil))
+            let fileURL = dir.appendingPathComponent("\(fileName!).txt")
+            
+            do{
+                try fileContent!.write(to: fileURL, atomically: false, encoding: .utf8)
+                result(true)
+            }catch{
+                result(FlutterError(code: "0", message: "Saving file failed", details: nil))
+            }
         }
+      
     }
 }
