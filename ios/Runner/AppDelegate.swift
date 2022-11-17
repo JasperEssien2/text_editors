@@ -3,15 +3,20 @@ import Flutter
 
 class FileApiImpl : FileApi{
     func saveTextFile(data: FileData) -> Response {
-        let appSupportDir = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        
-        let filePath = appSupportDir.appendingPathComponent("\(data.fileName!).txt").path
-        
-        if(FileManager.default.createFile(atPath: filePath, contents: data.content!.data(using: .utf8))){
-           return Response(successful: true)
-        }else{
-            return Response(successful: false, error: "Saving file failed")
+    
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first{
+            
+            let fileURL = dir.appendingPathComponent("\(data.fileName!).txt")
+            
+            do{
+                try data.content!.write(to: fileURL, atomically: false, encoding: .utf8)
+                return Response(successful: true)
+            }catch{
+                return Response(successful: false, error: "Saving file failed")
+            }
         }
+
+        return Response(successful: false, error: "Saving file failed")
     }
 }
 
