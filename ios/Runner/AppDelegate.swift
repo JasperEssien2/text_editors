@@ -36,10 +36,10 @@ import Flutter
 
       if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first{
             
-            let fileURL = dir.appendingPathComponent("\(fileName!).txt")
+            let fileURL = dir.appendingPathComponent("\(fileName).txt")
             
             do{
-                try fileContent!.write(to: fileURL, atomically: false, encoding: .utf8)
+                try fileContent.write(to: fileURL, atomically: false, encoding: .utf8)
                 result(true)
             }catch{
                 result(FlutterError(code: "0", message: "Saving file failed", details: nil))
